@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Dynamic Visualizations{% endblock %}
+
+{% block content %}
+<h2 class="text-primary">Generate Custom Visualizations</h2>
+<form method="post" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="trial_id" class="form-label">Select Trial</label>
+            <select class="form-select" id="trial_id" name="trial_id">
+                <option value="">All Trials</option>
+                {% for trial in trials %}
+                <option value="{{ trial.trial_id }}">{{ trial.trial_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date">
+        </div>
+        <div class="col-md-3">
+            <label for="end_date" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="end_date" name="end_date">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Generate</button>
+        </div>
+    </div>
+</form>
+
+{% if plot_html %}
+<div>
+    {{ plot_html|safe }}
+</div>
+{% else %}
+<p>No data available for the selected parameters.</p>
+{% endif %}
+{% endblock %}

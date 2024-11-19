@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Clinical Trial Data Analysis{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4 text-primary">Welcome to the Clinical Trial Data Analysis Tool</h1>
+    <p class="lead text-secondary">Empowering healthcare professionals with streamlined data management and analysis for better clinical outcomes.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            <img src="{{ url_for('static', filename='images/data_entry.webp') }}" class="card-img-top shadow" alt="Data Entry">
+            <div class="card-body">
+                <h5 class="card-title">Add and Manage Clinical Records</h5>
+                <p class="card-text">Easily input participant details, trial outcomes, and manage records with full CRUD functionality.</p>
+                <a href="" class="btn btn-primary">Add Record</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            <img src="{{ url_for('static', filename='images/data_visualization.webp') }}" class="card-img-top shadow" alt="Data Visualization">
+            <div class="card-body">
+                <h5 class="card-title">Visualize Clinical Data</h5>
+                <p class="card-text">Generate interactive charts and graphs to support your data analysis and uncover key insights.</p>
+                <a href="" class="btn btn-success">Visualize Data</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-5">
+    <p class="text-muted">Built to empower healthcare professionals with robust data analysis capabilities.</p>
+</div>
+{% endblock %}

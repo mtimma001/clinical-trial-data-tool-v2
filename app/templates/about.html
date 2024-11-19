@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}About - Clinical Trial Data Analysis{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary">About the Clinical Trial Data Analysis Tool</h1>
+        <p class="lead text-secondary">A comprehensive solution designed for healthcare professionals and researchers to manage, analyze, and visualize clinical trial data effectively.</p>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/about_tool.webp') }}" class="img-fluid rounded shadow" alt="About the Tool" style="max-height: 300px; width: 100%; object-fit: cover;">
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-success">Our Mission</h3>
+            <p>Our mission is to empower healthcare professionals by simplifying the complex process of managing clinical trial data. With this tool, users can seamlessly add, edit, analyze, and visualize clinical data, helping drive better research outcomes and improved healthcare solutions.</p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6 order-md-2">
+            <img src="{{ url_for('static', filename='images/team_collaboration.webp') }}" class="img-fluid rounded shadow" alt="Collaboration" style="max-height: 300px; width: 100%; object-fit: cover;">
+        </div>
+        <div class="col-md-6 order-md-1">
+            <h3 class="text-success">Why Choose Us?</h3>
+            <p>We prioritize user experience and data accuracy. Our tool features an intuitive interface, robust data handling, and powerful visualization capabilities powered by Plotly and Matplotlib. It is built for scalability and ease of use, catering specifically to the needs of clinical research teams and healthcare organizations.</p>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <h4 class="text-secondary">Join us in making clinical data analysis simpler and more effective.</h4>
+    </div>
+</div>
+{% endblock %}

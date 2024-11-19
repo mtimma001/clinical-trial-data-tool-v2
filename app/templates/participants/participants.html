@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Participants List{% endblock %}
+
+{% block content %}
+<h2 class="text-primary">Participants List</h2>
+<table id="data-table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Gender</th>
+            <th>Contact Info</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ table|safe }}
+    </tbody>
+</table>
+<a href="{{ url_for('participants.add_participant') }}" class="btn btn-success mt-3">Add New Participant</a>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        $('#data-table').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": true,
+            "searching": true
+        });
+    });
+</script>
+{% endblock %}

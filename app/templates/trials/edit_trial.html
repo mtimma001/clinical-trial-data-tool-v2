@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Trial{% endblock %}
+
+{% block content %}
+<h2 class="text-primary">Edit Trial</h2>
+<form method="post">
+    <div class="mb-3">
+        <label for="trial_name" class="form-label">Trial Name</label>
+        <input type="text" class="form-control" id="trial_name" name="trial_name" value="{{ trial.trial_name }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="start_date" class="form-label">Start Date</label>
+        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ trial.start_date }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="end_date" class="form-label">End Date</label>
+        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ trial.end_date }}">
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" name="status" required>
+            <option value="Ongoing" {% if trial.status == 'Ongoing' %}selected{% endif %}>Ongoing</option>
+            <option value="Completed" {% if trial.status == 'Completed' %}selected{% endif %}>Completed</option>
+            <option value="Cancelled" {% if trial.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock %}
