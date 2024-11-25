@@ -15,7 +15,8 @@
             <div class="card-body">
                 <h5 class="card-title">Add and Manage Clinical Records</h5>
                 <p class="card-text">Easily input participant details, trial outcomes, and manage records with full CRUD functionality.</p>
-                <a href="" class="btn btn-primary">Add Record</a>
+                <a href="{{ url_for('participants.show_participants') }}" class="btn btn-primary me-2">Participants</a>
+                <a href="{{ url_for('trials.show_trials') }}" class="btn btn-warning">Trials</a>
             </div>
         </div>
     </div>
@@ -25,7 +26,7 @@
             <div class="card-body">
                 <h5 class="card-title">Visualize Clinical Data</h5>
                 <p class="card-text">Generate interactive charts and graphs to support your data analysis and uncover key insights.</p>
-                <a href="" class="btn btn-success">Visualize Data</a>
+                <a href="{{ url_for('visuals.show_visuals') }}" class="btn btn-success">Visualize Data</a>
             </div>
         </div>
     </div>

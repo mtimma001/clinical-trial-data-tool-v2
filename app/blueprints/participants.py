@@ -19,7 +19,7 @@ def show_participants():
 
     # Add action buttons for editing and deleting
     df['Actions'] = df['participant_id'].apply(lambda p_id:
-                                               f'<a href="{url_for("participants.edit_participant", participant_id=p_id)}" class="btn btn-sm btn-info">Edit</a> '
+                                               f'<a href="{url_for("participants.edit_participant", participant_id=p_id)}" class="btn btn-sm btn-warning">Edit</a> '
                                                f'<form action="{url_for("participants.delete_participant", participant_id=p_id)}" method="post" style="display:inline;">'
                                                f'<button type="submit" class="btn btn-sm btn-danger">Delete</button></form>'
                                                )

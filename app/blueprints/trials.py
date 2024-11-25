@@ -18,14 +18,16 @@ def show_trials():
 
     # Add action buttons for editing and deleting
     df['Actions'] = df['trial_id'].apply(lambda t_id:
-                                         f'<a href="{url_for("trials.edit_trial", trial_id=t_id)}" class="btn btn-sm btn-info">Edit</a> '
+                                         f'<a href="{url_for("trials.edit_trial", trial_id=t_id)}" class="btn btn-sm btn-warning">Edit</a> '
                                          f'<form action="{url_for("trials.delete_trial", trial_id=t_id)}" method="post" style="display:inline;">'
                                          f'<button type="submit" class="btn btn-sm btn-danger">Delete</button></form>'
                                          )
 
     # Convert DataFrame to HTML for display
     table_html = df.to_html(classes='dataframe table table-striped table-bordered', index=False, escape=False)
-    return render_template("trials/trials.html", table=table_html)
+    rows_only = table_html.split('<tbody>')[1].split('</tbody>')[0]
+
+    return render_template("trials/trials.html", table=rows_only)
 
 # Route to add a new trial
 @trials.route('/trials/add', methods=['GET', 'POST'])

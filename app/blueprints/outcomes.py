@@ -20,17 +20,26 @@ def show_outcomes():
         result = cursor.fetchall()
 
     # Convert result to Pandas DataFrame
-    df = pd.DataFrame(result, columns=['outcome_id', 'participant_id', 'trial_id', 'outcome_date', 'outcome_details', 'result', 'first_name', 'last_name', 'trial_name'])
+    df = pd.DataFrame(result,
+                      columns=['outcome_id', 'trial_id', 'outcome_date', 'outcome_details', 'result',
+                               'first_name', 'last_name', 'trial_name'])
+
+    # Concatenate first and last names
+    df['full_name'] = df['first_name'] + ' ' + df['last_name']
+
+    # Drop the first_name and last_name columns
+    df = df.drop(columns=['first_name', 'last_name'])
 
     # Add action buttons for editing and deleting
     df['Actions'] = df['outcome_id'].apply(lambda o_id:
-                                           f'<a href="{url_for("outcomes.edit_outcome", outcome_id=o_id)}" class="btn btn-sm btn-info">Edit</a> '
+                                           f'<a href="{url_for("outcomes.edit_outcome", outcome_id=o_id)}" class="btn btn-sm btn-warning">Edit</a> '
                                            f'<form action="{url_for("outcomes.delete_outcome", outcome_id=o_id)}" method="post" style="display:inline;">'
                                            f'<button type="submit" class="btn btn-sm btn-danger">Delete</button></form>'
                                            )
 
     # Convert DataFrame to HTML for display
     table_html = df.to_html(classes='dataframe table table-striped table-bordered', index=False, escape=False)
+    table_html = table_html.split('<tbody>')[1].split('</tbody>')[0]
     return render_template("outcomes/outcomes.html", table=table_html)
 
 # Route to add a new outcome
