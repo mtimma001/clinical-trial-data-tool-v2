@@ -13,26 +13,22 @@ def show_visuals():
         trials = cursor.fetchall()
 
     plot_html = None
-    stats = None  # Initialize stats to None
+    stats = None
     selected_trial = None
     start_date = None
     end_date = None
 
     if request.method == 'POST':
-        # Get user inputs
         selected_trial = request.form.get('trial_id')
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
 
-        # Fetch and filter data based on user inputs
         df = fetch_and_filter_data(selected_trial, start_date, end_date)
 
-        # Generate statistics and visualizations
         if not df.empty:
             stats = generate_statistics(df)
             plot_html = generate_visualizations(df, selected_trial)
     else:
-        # Fetch all data if no filter is applied
         df = fetch_and_filter_data(None, None, None)
         if not df.empty:
             stats = generate_statistics(df)

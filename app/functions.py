@@ -99,3 +99,19 @@ def generate_visualizations(df, selected_trial):
     visualizations.append(pio.to_html(fig, full_html=False))
 
     return heading_html + ''.join(visualizations)
+
+
+def prepare_visualization_data(trial_id):
+    connection = get_db()
+    # Example data preparation logic (customize as needed)
+    generated_date = datetime.now()
+    description = f"Visualization for trial {trial_id} generated on {generated_date}"
+
+    # Insert metadata into visualizations_metadata table
+    query = """
+        INSERT INTO visualizations_metadata (trial_id, generated_date, description)
+        VALUES (%s, %s, %s)
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(query, (trial_id, generated_date, description))
+    connection.commit()

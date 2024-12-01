@@ -4,20 +4,22 @@
 
 {% block content %}
 <h2 class="text-primary">Add New Outcome</h2>
-<form method="post">
+<form method="POST" action="{{ url_for('outcomes.add_outcome') }}">
     <div class="mb-3">
         <label for="participant_id" class="form-label">Participant</label>
         <select class="form-select" id="participant_id" name="participant_id" required>
+            <option value="" disabled selected>Select a participant</option>
             {% for participant in participants %}
-            <option value="{{ participant.participant_id }}">{{ participant.first_name }} {{ participant.last_name }}</option>
+                <option value="{{ participant.participant_id }}">{{ participant.first_name }} {{ participant.last_name }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="mb-3">
         <label for="trial_id" class="form-label">Trial</label>
         <select class="form-select" id="trial_id" name="trial_id" required>
+            <option value="" disabled selected>Select a trial</option>
             {% for trial in trials %}
-            <option value="{{ trial.trial_id }}">{{ trial.trial_name }}</option>
+                <option value="{{ trial.trial_id }}">{{ trial.trial_name }}</option>
             {% endfor %}
         </select>
     </div>
@@ -27,12 +29,12 @@
     </div>
     <div class="mb-3">
         <label for="outcome_details" class="form-label">Outcome Details</label>
-        <textarea class="form-control" id="outcome_details" name="outcome_details" rows="3" required></textarea>
+        <textarea class="form-control" id="outcome_details" name="outcome_details" rows="3"></textarea>
     </div>
     <div class="mb-3">
         <label for="result" class="form-label">Result</label>
-        <input type="text" class="form-control" id="result" name="result" required>
+        <input type="text" class="form-control" id="result" name="result">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Add Outcome</button>
 </form>
 {% endblock %}

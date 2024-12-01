@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2 class="text-primary">Add New Trial</h2>
-<form method="post">
+<form method="POST" action="{{ url_for('trials.add_trial') }}">
     <div class="mb-3">
         <label for="trial_name" class="form-label">Trial Name</label>
         <input type="text" class="form-control" id="trial_name" name="trial_name" required>
@@ -15,16 +15,26 @@
     </div>
     <div class="mb-3">
         <label for="end_date" class="form-label">End Date</label>
-        <input type="date" class="form-control" id="end_date" name="end_date">
+        <input type="date" class="form-control" id="end_date" name="end_date" required>
     </div>
     <div class="mb-3">
         <label for="status" class="form-label">Status</label>
         <select class="form-select" id="status" name="status" required>
+            <option value="" disabled selected>Select a status</option>
             <option value="Ongoing">Ongoing</option>
             <option value="Completed">Completed</option>
             <option value="Cancelled">Cancelled</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="mb-3">
+        <label for="participant_id" class="form-label">Participant</label>
+        <select class="form-select" id="participant_id" name="participant_id" required>
+            <option value="" disabled selected>Select a participant</option>
+            {% for participant in participants %}
+                <option value="{{ participant.participant_id }}">{{ participant.first_name }} {{ participant.last_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Trial</button>
 </form>
 {% endblock %}

@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.db_connect import get_db
 import pandas as pd
+from app.functions import prepare_visualization_data
 
 outcomes = Blueprint('outcomes', __name__)
 
@@ -33,8 +34,8 @@ def show_outcomes():
     # Add action buttons for editing and deleting
     df['Actions'] = df['outcome_id'].apply(lambda o_id:
                                            f'<a href="{url_for("outcomes.edit_outcome", outcome_id=o_id)}" class="btn btn-sm btn-warning">Edit</a> '
-                                           f'<form action="{url_for("outcomes.delete_outcome", outcome_id=o_id)}" method="post" style="display:inline;">'
-                                           f'<button type="submit" class="btn btn-sm btn-danger">Delete</button></form>'
+                                           f'<form action="{url_for("outcomes.delete_outcome", outcome_id=o_id)}" method="POST" style="display:inline;">'
+                                           f'<button type="submit" class="btn btn-sm btn-danger mt-2">Delete</button></form>'
                                            )
 
     # Convert DataFrame to HTML for display
@@ -57,10 +58,13 @@ def add_outcome():
         with connection.cursor() as cursor:
             cursor.execute(query, (participant_id, trial_id, outcome_date, outcome_details, result))
         connection.commit()
+
+        # Prepare data for visualization and add metadata
+        prepare_visualization_data(trial_id)
+
         flash("New outcome added successfully!", "success")
         return redirect(url_for('outcomes.show_outcomes'))
 
-    # Fetch participants and trials for form dropdowns
     with connection.cursor() as cursor:
         cursor.execute("SELECT participant_id, first_name, last_name FROM participants")
         participants = cursor.fetchall()
@@ -81,23 +85,21 @@ def edit_outcome(outcome_id):
         result = request.form['result']
 
         query = """
-            UPDATE outcomes 
-            SET participant_id = %s, trial_id = %s, outcome_date = %s, outcome_details = %s, result = %s 
+            UPDATE outcomes
+            SET participant_id = %s, trial_id = %s, outcome_date = %s, outcome_details = %s, result = %s
             WHERE outcome_id = %s
         """
         with connection.cursor() as cursor:
             cursor.execute(query, (participant_id, trial_id, outcome_date, outcome_details, result, outcome_id))
         connection.commit()
-        flash("Outcome data updated successfully!", "success")
+        flash("Outcome updated successfully!", "success")
         return redirect(url_for('outcomes.show_outcomes'))
 
-    # Fetch outcome data for editing
     query = "SELECT * FROM outcomes WHERE outcome_id = %s"
     with connection.cursor() as cursor:
         cursor.execute(query, (outcome_id,))
         outcome = cursor.fetchone()
 
-    # Fetch participants and trials for dropdowns
     with connection.cursor() as cursor:
         cursor.execute("SELECT participant_id, first_name, last_name FROM participants")
         participants = cursor.fetchall()

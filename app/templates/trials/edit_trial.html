@@ -25,6 +25,17 @@
             <option value="Cancelled" {% if trial.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
         </select>
     </div>
+    <div class="mb-3">
+        <label for="participant_id" class="form-label">Participant</label>
+        <select class="form-select" id="participant_id" name="participant_id" required>
+            <option value="" disabled>Select a participant</option>
+            {% for participant in participants %}
+                <option value="{{ participant.participant_id }}" {% if participant.participant_id == trial.participant_id %}selected{% endif %}>
+                    {{ participant.first_name }} {{ participant.last_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Update</button>
 </form>
 {% endblock %}

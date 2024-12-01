@@ -1,37 +1,51 @@
 Table participants {
-  participant_id int [pk, increment] // Primary key, auto-increment
-  first_name varchar(50) [not null] // Participant's first name
-  last_name varchar(50) [not null] // Participant's last name
-  date_of_birth date [not null] // Participant's date of birth
-  gender enum('Male', 'Female', 'Other') [not null] // Gender of participant
-  contact_info varchar(100) // Contact information
+    participant_id INT [primary key, auto increment]
+    first_name VARCHAR(50) [not null]
+    last_name VARCHAR(50) [not null]
+    date_of_birth DATE [not null]
+    gender ENUM('Male', 'Female', 'Other') [not null]
+    contact_info VARCHAR(100)
 }
 
 Table trials {
-  trial_id int [pk, increment] // Primary key, auto-increment
-  trial_name varchar(100) [not null] // Name of the trial
-  start_date date [not null] // Start date of the trial
-  end_date date // End date of the trial
-  status enum('Ongoing', 'Completed', 'Cancelled') [default: 'Ongoing'] // Status of the trial
+    trial_id INT [primary key, auto increment]
+    trial_name VARCHAR(100) [not null]
+    start_date DATE [not null]
+    end_date DATE
+    status ENUM('Ongoing', 'Completed', 'Cancelled') [default: 'Ongoing']
+    participant_id INT [not null]
+
+    Indexes {
+        participant_id [unique]
+    }
 }
 
 Table outcomes {
-  outcome_id int [pk, increment] // Primary key, auto-increment
-  participant_id int [ref: > participants.participant_id] // Foreign key to participants
-  trial_id int [ref: > trials.trial_id] // Foreign key to trials
-  outcome_date date [not null] // Date of the outcome
-  outcome_details text // Details about the outcome
-  result varchar(100) // Outcome result
+    outcome_id INT [primary key, auto increment]
+    participant_id INT
+    trial_id INT
+    outcome_date DATE [not null]
+    outcome_details TEXT
+    result VARCHAR(100)
+
+    Indexes {
+        participant_id
+        trial_id
+    }
 }
 
 Table visualizations_metadata {
-  visualization_id int [pk, increment] // Primary key, auto-increment
-  trial_id int [ref: > trials.trial_id] // Foreign key to trials
-  generated_date date [not null] // Date the visualization was generated
-  description varchar(255) // Description of the visualization
+    visualization_id INT [primary key, auto increment]
+    trial_id INT
+    generated_date DATE [not null]
+    description VARCHAR(255)
+
+    Indexes {
+        trial_id
+    }
 }
 
-// Relationships
-Ref: outcomes.participant_id > participants.participant_id
-Ref: outcomes.trial_id > trials.trial_id
-Ref: visualizations_metadata.trial_id > trials.trial_id
+Ref: trials.participant_id > participants.participant_id [delete: cascade, update: cascade]
+Ref: outcomes.participant_id > participants.participant_id [delete: cascade, update: cascade]
+Ref: outcomes.trial_id > trials.trial_id [delete: cascade, update: cascade]
+Ref: visualizations_metadata.trial_id > trials.trial_id [delete: cascade, update: cascade]
