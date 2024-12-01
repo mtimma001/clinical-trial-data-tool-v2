@@ -3,33 +3,33 @@
 {% block title %}Visualizations{% endblock %}
 
 {% block content %}
-<h2 class="text-primary">Visualizations</h2>
+<h2 class="text-primary text-center">Visualizations</h2>
 
 <!-- Filter Form -->
-<form method="post" class="mb-4">
-    <div class="row">
-        <div class="col-md-4">
-            <label for="trial_id" class="form-label">Select Trial</label>
-            <select id="trial_id" name="trial_id" class="form-select">
-                <option value="" {% if not selected_trial %}selected{% endif %}>
-                    All Trials
-                </option>
-                {% for trial in trials %}
-                    <option value="{{ trial.trial_id }}" {% if selected_trial and trial.trial_id == selected_trial %}selected{% endif %}>{{ trial.trial_name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-4">
-            <label for="start_date" class="form-label">Start Date</label>
-            <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
-        </div>
-        <div class="col-md-4">
-            <label for="end_date" class="form-label">End Date</label>
-            <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary mt-3">Filter</button>
-</form>
+<!--<form method="post" class="mb-4">-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-4">-->
+<!--            <label for="trial_id" class="form-label">Select Trial</label>-->
+<!--            <select id="trial_id" name="trial_id" class="form-select">-->
+<!--                <option value="" {% if not selected_trial %}selected{% endif %}>-->
+<!--                    All Trials-->
+<!--                </option>-->
+<!--                {% for trial in trials %}-->
+<!--                    <option value="{{ trial.trial_id }}" {% if selected_trial and trial.trial_id == selected_trial %}selected{% endif %}>{{ trial.trial_name }}</option>-->
+<!--                {% endfor %}-->
+<!--            </select>-->
+<!--        </div>-->
+<!--        <div class="col-md-4">-->
+<!--            <label for="start_date" class="form-label">Start Date</label>-->
+<!--            <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">-->
+<!--        </div>-->
+<!--        <div class="col-md-4">-->
+<!--            <label for="end_date" class="form-label">End Date</label>-->
+<!--            <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <button type="submit" class="btn btn-primary mt-3">Filter</button>-->
+<!--</form>-->
 
 <!-- Display Statistics -->
 {% if stats %}
