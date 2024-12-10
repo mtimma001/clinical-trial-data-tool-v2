@@ -88,7 +88,20 @@ def generate_visualizations(df, selected_trial):
 
     heading_html = f"<h3 class='text-center'>{trial_name}</h3>"
 
-    visualizations = [plot_outcomes_by_trial(df, selected_trial), plot_outcomes_over_time(df)]
+    visualizations = []
+
+    # Pie chart for results
+    pie_data = df['result'].value_counts().reset_index()
+    pie_data.columns = ['category', 'count']
+    pie_fig = px.pie(pie_data, values='count', names='category', title='Pie Chart')
+    pie_fig.update_layout(title={'x': 0.5, 'xanchor': 'center'})
+    visualizations.append(f"<div style='margin-bottom: 20px;'>{pio.to_html(pie_fig, full_html=False)}</div>")
+
+    # Bar chart for outcomes by trial
+    visualizations.append(f"<div style='margin-bottom: 20px;'>{plot_outcomes_by_trial(df, selected_trial)}</div>")
+
+    # Line chart for outcomes over time
+    visualizations.append(f"<div style='margin-bottom: 20px;'>{plot_outcomes_over_time(df)}</div>")
 
     # Histogram for results
     fig = px.histogram(df, x='result', title='Distribution of Results',
@@ -96,10 +109,9 @@ def generate_visualizations(df, selected_trial):
                        color_discrete_sequence=px.colors.qualitative.Plotly)
     fig.update_layout(margin=dict(l=20, r=20, t=40, b=20),
                       title={'x': 0.5, 'xanchor': 'center'})
-    visualizations.append(pio.to_html(fig, full_html=False))
+    visualizations.append(f"<div style='margin-bottom: 20px;'>{pio.to_html(fig, full_html=False)}</div>")
 
     return heading_html + ''.join(visualizations)
-
 
 def prepare_visualization_data(trial_id):
     connection = get_db()
@@ -115,3 +127,11 @@ def prepare_visualization_data(trial_id):
     with connection.cursor() as cursor:
         cursor.execute(query, (trial_id, generated_date, description))
     connection.commit()
+
+def generate_pie_chart(df):
+    # Use 'result' column for the pie chart
+    pie_data = df['result'].value_counts().reset_index()
+    pie_data.columns = ['category', 'count']
+    fig = px.pie(pie_data, values='count', names='category', title='Pie Chart')
+    fig.update_layout(title={'x': 0.5, 'xanchor': 'center'})
+    return fig.to_html(full_html=False)

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Visuals{% endblock %}
+
+{% block content %}
+<h2 class="text-primary text-center">Visuals</h2>
+
+<!-- Display Statistics -->
+{% if stats %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Total Outcomes</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ stats.total_outcomes }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Total Participants</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ stats.total_participants }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">Total Trials</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ stats.total_trials }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if plot_html %}
+<div class="mt-4">
+    {{ plot_html|safe }}
+</div>
+{% endif %}
+{% endblock %}

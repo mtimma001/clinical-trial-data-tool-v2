@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from app.db_connect import get_db
-from ..functions import generate_statistics, generate_visualizations, fetch_and_filter_data
+from ..functions import generate_statistics, generate_visualizations, fetch_and_filter_data, generate_pie_chart
 
 visuals = Blueprint('visuals', __name__)
 
@@ -13,6 +13,7 @@ def show_visuals():
         trials = cursor.fetchall()
 
     plot_html = None
+    pie_chart_html = None
     stats = None
     selected_trial = None
     start_date = None
@@ -28,10 +29,12 @@ def show_visuals():
         if not df.empty:
             stats = generate_statistics(df)
             plot_html = generate_visualizations(df, selected_trial)
+            pie_chart_html = generate_pie_chart(df)
     else:
         df = fetch_and_filter_data(None, None, None)
         if not df.empty:
             stats = generate_statistics(df)
             plot_html = generate_visualizations(df, None)
+            pie_chart_html = generate_pie_chart(df)
 
-    return render_template('visuals/visuals.html', trials=trials, plot_html=plot_html, stats=stats, selected_trial=selected_trial, start_date=start_date, end_date=end_date)
+    return render_template('visuals.html', trials=trials, plot_html=plot_html, pie_chart_html=pie_chart_html, stats=stats, selected_trial=selected_trial, start_date=start_date, end_date=end_date)
